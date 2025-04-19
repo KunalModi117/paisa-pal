@@ -14,6 +14,10 @@ import { usePostTransaction } from "./usePostTransaction";
 import { toast } from "sonner";
 import { useGetTransactions } from "./useGetTransactions";
 import { useInfiniteScroll } from "@pal/hooks/useInfiniteScroll";
+import { Typography } from "@pal/components/Typography/Typography";
+import TransactionCard from "./TransactionCard";
+import { groupByDate } from "@pal/utils/util";
+import { TransactionSkeleton } from "./TransactionSkeleton";
 
 interface TransactionFields {
   title: string;
@@ -33,6 +37,8 @@ export const Transactions = () => {
     usePostTransaction();
   const { transactions, hasNextPage, loadMore, isLoading } =
     useGetTransactions();
+  const grouped = groupByDate(transactions);
+
   const loaderRef = useInfiniteScroll({ loadMore, hasNextPage, isLoading });
 
   const categoryOptions = categories.map((category) => ({
@@ -62,14 +68,30 @@ export const Transactions = () => {
         subtitle="Log your transactions and keep track of your spending."
       />
       <Button onClick={handleAddTransactionModalOpen}>Add Transaction</Button>
-      <div>
-        {transactions.map((tx) => (
-          <div key={tx._id}>{tx._id}</div>
+      <div className="flex flex-col gap-1 mt-4">
+        {Object.entries(grouped).map(([date, txns]) => (
+          <div key={date} className="flex flex-col gap-2">
+            <Typography variant="h6" className="text-muted-foreground">
+              {date}
+            </Typography>
+            {txns.map(({ _id, title, amount, type, categoryId }) => (
+              <TransactionCard
+                key={_id}
+                title={title}
+                amount={amount}
+                type={type}
+                category={{
+                  name: categoryId.name,
+                  emoji: categoryId.emoji,
+                  color: categoryId.color,
+                }}
+              />
+            ))}
+          </div>
         ))}
-        <div ref={loaderRef}>
-          {isLoading && <p className="text-muted">Loading more...</p>}
-        </div>
+        <div ref={loaderRef}>{isLoading && <TransactionSkeleton />}</div>
       </div>
+
       <Dialog
         isOpen={isAddTransactionsModalOpen}
         setIsOpen={handleAddTransactionModalOpen}

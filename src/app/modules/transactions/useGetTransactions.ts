@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 
+interface Category {
+  name: string;
+  emoji: string;
+  color: string;
+  type: string;
+  _id: string;
+}
+
 export interface Transaction {
   _id: string;
-  userId: string;
   amount: number;
-  categoryId: string;
+  categoryId: Category;
   type: "income" | "expense";
   date: string;
-  note?: string;
+  title: string;
   createdAt: string;
-  updatedAt: string;
 }
 
 interface ApiResponse {
@@ -32,6 +38,7 @@ export const useGetTransactions = () => {
       setIsLoading(true);
       const res = await fetch(`/api/transactions/get?page=${pageToFetch}`);
       const result: ApiResponse = await res.json();
+      console.log(result, "result");
 
       if (pageToFetch === 1) {
         setTransactions(result.data);

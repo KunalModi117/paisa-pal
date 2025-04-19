@@ -11,6 +11,7 @@ import { ColorSwatchField } from "@pal/components/ColorSwatchField";
 import { toast } from "sonner";
 import { addCategorySchema } from "./addCategorySchema";
 import { usePostCategory } from "./usePostCategory";
+import { unicodeToEmoji } from "@pal/utils/util";
 
 export const emojiOptions = [
   { label: "🍽️", value: "U+1F37D U+FE0F" }, // Food & Dining
@@ -67,18 +68,6 @@ export const Budgets = () => {
   const color = values.color;
   const emoji = values.emoji;
 
-  const unicodeToEmoji = (unicode: string) => {
-    try {
-      return String.fromCodePoint(
-        ...unicode
-          .split("U+")
-          .filter(Boolean)
-          .map((u) => parseInt(u, 16))
-      );
-    } catch {
-      return "❓";
-    }
-  };
   return (
     <div className="flex flex-col w-full px-4">
       <PageTitle
