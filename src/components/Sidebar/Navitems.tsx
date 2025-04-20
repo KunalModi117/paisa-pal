@@ -18,7 +18,7 @@ const navItems = [
 export const Navitems = () => {
   const pathname = usePathname();
   return (
-    <nav className="flex flex-col p-4 w-full gap-4">
+    <nav className="fixed bg-accent md:bg-transparent bottom-0 md:static flex justify-between md:justify-normal md:flex-col p-4 w-full gap-4">
       {navItems.map(({ id, href, title, icon }) => (
         <Link
           key={id}
@@ -28,8 +28,14 @@ export const Navitems = () => {
             { "bg-secondary": pathname === href }
           )}
         >
-          <span>{title}</span>
-          {icon}
+          <span className="hidden md:block">{title}</span>
+          <span
+            className={cn({
+              "text-primary md:text-accent-foreground": pathname === href,
+            })}
+          >
+            {icon}
+          </span>
         </Link>
       ))}
     </nav>

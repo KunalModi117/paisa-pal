@@ -31,8 +31,8 @@ const RootLayout = async ({
           disableTransitionOnChange
         >
           <Provider>
-            <div className="flex gap-4 h-full">
-              <Sidebar />
+            <Sidebar />
+            <div className="md:ml-[174px] pb-[72px] md:pb-0">
               {children}
               <Toaster />
             </div>

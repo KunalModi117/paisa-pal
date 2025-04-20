@@ -72,6 +72,6 @@ export const useGetTransactions = () => {
     hasNextPage,
     totalPages,
     loadMore,
-    refetch: () => getTransactions(1),
+    fetchTransactions: () => getTransactions(1),
   };
 };

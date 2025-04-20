@@ -11,6 +11,7 @@ export function useReactHookForm<T extends ZodType<AnyType, AnyType>>(
     formState: { errors },
     handleSubmit,
     watch,
+    reset,
   } = useForm<TypeOf<T>>({
     resolver: zodResolver(schema),
   });
@@ -22,5 +23,6 @@ export function useReactHookForm<T extends ZodType<AnyType, AnyType>>(
     errors,
     handleSubmit,
     values,
+    reset,
   };
 }

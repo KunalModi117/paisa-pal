@@ -18,7 +18,8 @@ import { Typography } from "@pal/components/Typography/Typography";
 import TransactionCard from "./TransactionCard";
 import { groupByDate } from "@pal/utils/util";
 import { TransactionSkeleton } from "./TransactionSkeleton";
-
+import { Plus } from "lucide-react";
+import { RadioField } from "@pal/components/RadioField";
 interface TransactionFields {
   title: string;
   type: string;
@@ -35,7 +36,7 @@ export const Transactions = () => {
   const { categories, isLoading: isCategoriesLoading } = useGetCategories();
   const { isLoading: isPostingTransactions, postTransactionData } =
     usePostTransaction();
-  const { transactions, hasNextPage, loadMore, isLoading } =
+  const { transactions, hasNextPage, loadMore, isLoading, fetchTransactions } =
     useGetTransactions();
   const grouped = groupByDate(transactions);
 
@@ -58,6 +59,7 @@ export const Transactions = () => {
       type: data.type,
     });
     toast.success("Transaction logged successfully");
+    fetchTransactions();
     handleAddTransactionModalOpen();
   };
 
@@ -67,7 +69,13 @@ export const Transactions = () => {
         title="Transactions"
         subtitle="Log your transactions and keep track of your spending."
       />
-      <Button onClick={handleAddTransactionModalOpen}>Add Transaction</Button>
+      <Button
+        onClick={handleAddTransactionModalOpen}
+        variant="default"
+        className="rounded-full !px-3 !py-3 h-fit fixed bottom-20 md:bottom-10 right-5"
+      >
+        <Plus className="!w-6 !h-6 text-white" />
+      </Button>
       <div className="flex flex-col gap-1 mt-4">
         {Object.entries(grouped).map(([date, txns]) => (
           <div key={date} className="flex flex-col gap-2">
@@ -114,11 +122,11 @@ export const Transactions = () => {
             message={errors.amount?.message}
             placeholder="Amount"
           />
-          <SelectField
+          <RadioField
             control={control}
             name="type"
             message={errors.type?.message}
-            placeholder="Type"
+            orientation="horizontal"
             options={[
               { label: "Income", value: "income" },
               { label: "Expense", value: "expense" },
@@ -138,7 +146,7 @@ export const Transactions = () => {
             placeholder="Select date"
             message={errors.date?.message}
           />
-          <Button isLoading={isPostingTransactions}>Submit</Button>
+          <Button isLoading={isPostingTransactions}>Spend</Button>
         </form>
       </Dialog>
     </div>
