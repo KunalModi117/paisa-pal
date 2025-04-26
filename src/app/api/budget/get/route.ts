@@ -6,6 +6,19 @@ import { NextResponse } from "next/server";
 import { startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
 import { authOptions } from "../../auth/[...nextauth]/route";
 
+function isBudgetActive(startDate: Date, frequency: "weekly" | "monthly") {
+  const now = new Date();
+  const expiryDate = new Date(startDate);
+
+  if (frequency === "weekly") {
+    expiryDate.setDate(expiryDate.getDate() + 7);
+  } else {
+    expiryDate.setMonth(expiryDate.getMonth() + 1);
+  }
+
+  return now <= expiryDate;
+}
+
 export async function GET() {
   try {
     await connectDB();
@@ -19,8 +32,12 @@ export async function GET() {
       .populate("categoryId")
       .lean();
 
+    const activeBudgets = budgets.filter((budget) =>
+      isBudgetActive(budget.startDate, budget.frequency)
+    );
+
     const budgetData = await Promise.all(
-      budgets.map(async (budget) => {
+      activeBudgets.map(async (budget) => {
         let dateRangeStart, dateRangeEnd;
 
         if (budget.frequency === "weekly") {

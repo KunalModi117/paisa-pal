@@ -21,7 +21,7 @@ export interface CategoryFormFields {
 export const Budgets = () => {
   const [open, setOpen] = useState(false);
   const [isBudgetDrawerOpen, setIsBudgetDrawerOpen] = useState(false);
-  const { budgets, isLoading } = useGetBudgets();
+  const { budgets, isLoading, refetch } = useGetBudgets();
   const handleCategoryDrawer = () => {
     setOpen(true);
   };
@@ -39,7 +39,11 @@ export const Budgets = () => {
       />
       <div className="flex flex-col gap-1 mt-4">
         {budgets.weekly.length > 0 && (
-          <SectionTitle title="Weekly" daysLeft={2} budgeted={193} left={115} />
+          <SectionTitle
+            title="Weekly"
+            budgeted={budgets.weekly.reduce((acc, b) => acc + b.amount, 0)}
+            left={budgets.weekly.reduce((acc, b) => acc + b.left, 0)}
+          />
         )}
         {budgets.weekly.map(
           ({ _id, left, amount, categoryId: { name, color, emoji } }) => (
@@ -56,9 +60,8 @@ export const Budgets = () => {
         {budgets.monthly.length > 0 && (
           <SectionTitle
             title="Monthly"
-            daysLeft={2}
-            budgeted={193}
-            left={115}
+            budgeted={budgets.monthly.reduce((acc, b) => acc + b.amount, 0)}
+            left={budgets.monthly.reduce((acc, b) => acc + b.left, 0)}
           />
         )}
         {budgets.monthly.map(
@@ -93,6 +96,7 @@ export const Budgets = () => {
       <AddBudgetDrawer
         open={isBudgetDrawerOpen}
         handleOpen={handleAddBudgetDrawerOpen}
+        refetch={refetch}
       />
     </div>
   );

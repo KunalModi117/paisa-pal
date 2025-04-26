@@ -20,9 +20,11 @@ export interface BudgetFormFields {
 export const AddBudgetDrawer = ({
   open,
   handleOpen,
+  refetch,
 }: {
   open: boolean;
   handleOpen: () => void;
+  refetch: () => void;
 }) => {
   const { handleSubmit, reset, control, errors } =
     useReactHookForm(addBudgetSchema);
@@ -37,6 +39,7 @@ export const AddBudgetDrawer = ({
     postBudget(data).then(() => {
       toast.success("Budget created successfully");
       reset();
+      refetch();
       handleOpen();
     });
   };
