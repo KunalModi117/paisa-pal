@@ -2,10 +2,14 @@
 
 import { PageTitle } from "@pal/components/PageTitle/PageTitle";
 import { Button } from "@pal/components/ui/button";
-import { useState } from "react";
 import { Plus } from "lucide-react";
-import { AddCategoryDrawer } from "./AddCategoryDrawer";
+import { useState } from "react";
+import { TransactionCardSkeleton } from "../transactions/TransactionCardSkeleton";
 import { AddBudgetDrawer } from "./AddBudgetDrawer";
+import { AddCategoryDrawer } from "./AddCategoryDrawer";
+import { BudgetCard } from "./BudgetCard";
+import { SectionTitle } from "./SectionTitle";
+import { useGetBudgets } from "./useGetBudgets";
 
 export interface CategoryFormFields {
   type: string;
@@ -17,6 +21,7 @@ export interface CategoryFormFields {
 export const Budgets = () => {
   const [open, setOpen] = useState(false);
   const [isBudgetDrawerOpen, setIsBudgetDrawerOpen] = useState(false);
+  const { budgets, isLoading } = useGetBudgets();
   const handleCategoryDrawer = () => {
     setOpen(true);
   };
@@ -32,6 +37,44 @@ export const Budgets = () => {
         title="Budget"
         subtitle="Set monthly limits and take control of your spending."
       />
+      <div className="flex flex-col gap-1 mt-4">
+        {budgets.weekly.length > 0 && (
+          <SectionTitle title="Weekly" daysLeft={2} budgeted={193} left={115} />
+        )}
+        {budgets.weekly.map(
+          ({ _id, left, amount, categoryId: { name, color, emoji } }) => (
+            <BudgetCard
+              budgeted={amount}
+              color={color}
+              left={left}
+              emoji={emoji}
+              label={name}
+              key={_id}
+            />
+          )
+        )}
+        {budgets.monthly.length > 0 && (
+          <SectionTitle
+            title="Monthly"
+            daysLeft={2}
+            budgeted={193}
+            left={115}
+          />
+        )}
+        {budgets.monthly.map(
+          ({ _id, left, amount, categoryId: { name, color, emoji } }) => (
+            <BudgetCard
+              budgeted={amount}
+              color={color}
+              left={left}
+              emoji={emoji}
+              label={name}
+              key={_id}
+            />
+          )
+        )}
+        {isLoading && <TransactionCardSkeleton />}
+      </div>
       <Button
         variant="mutedDashed"
         className="w-full"

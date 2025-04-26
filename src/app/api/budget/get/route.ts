@@ -15,7 +15,9 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const budgets = await Budget.find({ userId: session.user.id }).lean();
+    const budgets = await Budget.find({ userId: session.user.id })
+      .populate("categoryId")
+      .lean();
 
     const budgetData = await Promise.all(
       budgets.map(async (budget) => {
@@ -32,7 +34,7 @@ export async function GET() {
         const transactions = await Transaction.find({
           userId: session.user.id,
           categoryId: budget.categoryId,
-          date: { $gte: dateRangeStart, $lte: dateRangeEnd },
+          createdAt: { $gte: dateRangeStart, $lte: dateRangeEnd },
         });
 
         const spent = transactions.reduce((acc, tx) => acc + tx.amount, 0);

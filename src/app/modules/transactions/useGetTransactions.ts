@@ -38,7 +38,6 @@ export const useGetTransactions = () => {
       setIsLoading(true);
       const res = await fetch(`/api/transactions/get?page=${pageToFetch}`);
       const result: ApiResponse = await res.json();
-      console.log(result, "result");
 
       if (pageToFetch === 1) {
         setTransactions(result.data);
