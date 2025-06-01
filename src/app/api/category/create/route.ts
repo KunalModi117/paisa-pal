@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { connectDB } from "@pal/lib/mongodb";
 import Category from "@pal/models/category";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@pal/lib/authOptions";
 
 export async function POST(req: Request) {
   try {

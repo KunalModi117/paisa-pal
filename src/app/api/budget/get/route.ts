@@ -5,7 +5,7 @@ import Budget from "@pal/models/budget";
 import Transaction from "@pal/models/transaction";
 import { NextResponse } from "next/server";
 import { startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@pal/lib/authOptions";
 
 function isBudgetActive(startDate: Date, frequency: "weekly" | "monthly") {
   const now = new Date();

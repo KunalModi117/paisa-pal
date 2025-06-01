@@ -2,7 +2,7 @@ import { connectDB } from "@pal/lib/mongodb";
 import category from "@pal/models/category";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@pal/lib/authOptions";
 
 export async function GET() {
   try {

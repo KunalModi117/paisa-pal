@@ -1,8 +1,8 @@
+import { authOptions } from "@pal/lib/authOptions";
 import { connectDB } from "@pal/lib/mongodb";
 import Budget from "@pal/models/budget";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function POST(req: Request) {
   try {
