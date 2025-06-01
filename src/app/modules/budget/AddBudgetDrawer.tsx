@@ -9,6 +9,7 @@ import { RadioField } from "@pal/components/RadioField";
 import { DateField } from "@pal/components/DateField";
 import { Button } from "@pal/components/ui/button";
 import { usePostBudget } from "./usePostBudget";
+import { numberRegex } from "@pal/utils/regex";
 
 export interface BudgetFormFields {
   categoryId: string;
@@ -66,6 +67,7 @@ export const AddBudgetDrawer = ({
           name="amount"
           message={errors.amount?.message}
           placeholder="Enter budget amount"
+          regexTest={numberRegex}
         />
         <RadioField
           control={control}
@@ -81,7 +83,7 @@ export const AddBudgetDrawer = ({
           control={control}
           name="startDate"
           message={errors.startDate?.message}
-          placeholder="Selec budget start date"
+          placeholder="Select budget start date"
         />
         <Button isLoading={isLoading}>Submit</Button>
       </form>

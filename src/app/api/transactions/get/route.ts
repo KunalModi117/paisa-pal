@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { connectDB } from "@pal/lib/mongodb";
+import "@pal/models/category";
 import transaction from "@pal/models/transaction";
 
 export async function GET(req: NextRequest) {

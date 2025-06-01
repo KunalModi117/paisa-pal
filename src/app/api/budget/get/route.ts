@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import { connectDB } from "@pal/lib/mongodb";
+import "@pal/models/category";
 import Budget from "@pal/models/budget";
 import Transaction from "@pal/models/transaction";
 import { NextResponse } from "next/server";

@@ -9,6 +9,7 @@ type InputFieldProps = {
   className?: string;
   message?: string;
   type?: string;
+  regexTest?: RegExp; // <-- new prop
 };
 
 export function InputField({
@@ -18,6 +19,7 @@ export function InputField({
   className,
   message,
   type = "text",
+  regexTest, // <-- destructure it
 }: InputFieldProps) {
   const hasError = !!message;
 
@@ -35,6 +37,12 @@ export function InputField({
               hasError ? "border-destructive ring-destructive/50" : ""
             } ${className}`}
             value={field.value ?? ""}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (!regexTest || regexTest.test(value) || value === "") {
+                field.onChange(value);
+              }
+            }}
           />
         )}
       />

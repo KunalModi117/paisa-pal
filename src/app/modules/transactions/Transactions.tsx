@@ -20,6 +20,7 @@ import { groupByDate } from "@pal/utils/util";
 import { TransactionSkeleton } from "./TransactionSkeleton";
 import { Plus } from "lucide-react";
 import { RadioField } from "@pal/components/RadioField";
+import { numberRegex } from "@pal/utils/regex";
 interface TransactionFields {
   title: string;
   type: string;
@@ -121,6 +122,7 @@ export const Transactions = () => {
             name="amount"
             message={errors.amount?.message}
             placeholder="Amount"
+            regexTest={numberRegex}
           />
           <RadioField
             control={control}
