@@ -40,12 +40,9 @@ export function ExpensesPieChart({ categoryData }: Props) {
         <CardTitle>Expenses by Category</CardTitle>
         <CardDescription>This month</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
-        >
-          <ResponsiveContainer width="100%" height="100%">
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <ResponsiveContainer>
             <PieChart>
               <ChartTooltip
                 cursor={false}

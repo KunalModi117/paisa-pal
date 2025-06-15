@@ -6,8 +6,8 @@ import {
   Transaction,
   useGetTransactions,
 } from "../transactions/useGetTransactions";
-import { Card, CardContent } from "@pal/components/ui/card";
-import { Progress } from "@pal/components/ui/progress";
+// import { Card, CardContent } from "@pal/components/ui/card";
+// import { Progress } from "@pal/components/ui/progress";
 import { unicodeToEmoji } from "@pal/utils/util";
 import { ExpensesPieChart } from "./ExpensePieChart";
 import { IncomeExpenseBarChart } from "./IncomeExpenseBarChart";
@@ -58,11 +58,11 @@ export const Dashboard = () => {
   );
 
   return (
-    <div className="grid gap-4 grid-col-1 md:grid-cols-2 p-4">
+    <div className="grid gap-4 grid-col-1 md:grid-cols-2 p-4 w-full h-full">
       <IncomeExpenseBarChart incomeVsExpense={incomeVsExpense} />
       <ExpensesPieChart categoryData={categoryData} />
 
-      {budgets.weekly.length || budgets.monthly.length ? (
+      {/* {budgets.weekly.length || budgets.monthly.length ? (
         <Card className="md:col-span-2 lg:col-span-1">
           <CardContent className="p-4">
             <h2 className="text-lg font-semibold mb-2">Budget Progress</h2>
@@ -73,7 +73,8 @@ export const Dashboard = () => {
                   <div key={budget._id}>
                     <div className="flex justify-between text-sm mb-1">
                       <span>
-                        {budget.categoryId.emoji} {budget.categoryId.name}
+                        {unicodeToEmoji(budget.categoryId.emoji)}&nbsp;
+                        {budget.categoryId.name}
                       </span>
                       <span className="text-muted-foreground">
                         ₹{budget.spent} / ₹{budget.amount}
@@ -86,7 +87,7 @@ export const Dashboard = () => {
             </div>
           </CardContent>
         </Card>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

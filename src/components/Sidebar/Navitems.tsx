@@ -18,7 +18,7 @@ const navItems = [
 export const Navitems = () => {
   const pathname = usePathname();
   return (
-    <nav className="fixed bg-accent md:bg-transparent bottom-0 md:static flex justify-between md:justify-normal md:flex-col p-4 w-full gap-4">
+    <nav className="fixed bg-accent md:bg-transparent bottom-0 md:static flex justify-between md:justify-normal md:flex-col p-4 w-full gap-4 z-10">
       {navItems.map(({ id, href, title, icon }) => (
         <Link
           key={id}

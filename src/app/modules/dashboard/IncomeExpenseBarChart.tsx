@@ -45,9 +45,9 @@ export function IncomeExpenseBarChart({ incomeVsExpense }: Props) {
         <CardTitle>Income vs Expense</CardTitle>
         <CardDescription>This month</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1">
-        <ChartContainer config={chartConfig} className="w-full h-[200px]">
-          <ResponsiveContainer width="100%" height="100%">
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <ResponsiveContainer>
             <BarChart data={incomeVsExpense}>
               <CartesianGrid vertical={false} />
               <XAxis
